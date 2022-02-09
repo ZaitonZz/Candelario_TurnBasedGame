@@ -4,5 +4,11 @@
     <string name="placeholder">placeholder</string>
     <!-- strings to be used-->
     <string name="mons_name">Arceus</string>
+    <string name="mons_lvl">Lvl:\n</string>
     <string name="hero_name">Charizard</string>
+    <string name="hero_lvl">Lvl:\n</string>
+    <string name="empty_text">\n</string>
+    <string name="not_enough_mana" translatable="true">You don\'t have enough mana</string>
+    <string name="lose">You lose</string>
+    <string name="start_game">Start Game</string>
 </resources>
