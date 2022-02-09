@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         hero_mana_value++;
                         hero_mana.setText(String.valueOf(hero_mana_value));
                         btnNormAtk.setText("Next Turn ("+ String.valueOf(turnNumber)+")");
-                        combat_log.setText(String.valueOf(cd1)+String.valueOf(cd2)+String.valueOf(cd3)+String.valueOf(cd4));
+                        // combat_log.setText(String.valueOf(cd1)+String.valueOf(cd2)+String.valueOf(cd3)+String.valueOf(cd4)); for debug purposes
                         break;
                     }
                     mons_hp_value = mons_hp_value - herodps;
