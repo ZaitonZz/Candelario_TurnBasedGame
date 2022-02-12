@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Candelario_TurnBasedGame">
         <activity
-            android:name=".MainActivity"
+            android:name=".View.MainActivity"
             android:exported="true"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"

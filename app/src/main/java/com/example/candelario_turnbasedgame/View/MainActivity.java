@@ -1,4 +1,4 @@
-package com.example.candelario_turnbasedgame;
+package com.example.candelario_turnbasedgame.View;
 
 import static android.content.ContentValues.TAG;
 import static com.example.candelario_turnbasedgame.R.id.btnNormAtk;
@@ -14,6 +14,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.example.candelario_turnbasedgame.R;
+
 import java.util.*;
 
 import java.util.Random;
@@ -32,10 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     byte stuncounter = 0;
     byte burncounter = 0;
     byte sleepcounter = 0;
-    byte cd1 = 0;
-    byte cd2 = 0;
-    byte cd3 = 0;
-    byte cd4 = 0;
     double burn1 = 0.2;
     boolean disabledstatus = false;
 
@@ -44,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     byte skill2_cost=9;
     byte skill3_cost=5;
     byte skill4_cost=10;
+    byte cd1 = 0;
+    byte cd2 = 0;
+    byte cd3 = 0;
+    byte cd4 = 0;
 
     // Monster Stats
     static float mons_base_hp = 20;
@@ -118,6 +121,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         skill2.setOnClickListener(this);
         skill3.setOnClickListener(this);
         skill4.setOnClickListener(this);
+
+        // Disables skills before the game starts
+        skill1.setEnabled(false);
+        skill2.setEnabled(false);
+        skill3.setEnabled(false);
+        skill4.setEnabled(false);
     }
 
     public void onClick(View v) {
@@ -128,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int mons_minDamage = Math.round(monsterMinDamage);
         int mons_maxDamage = Math.round(monsterMaxDamage);
 
+        // Called the randomizer for herodps and monsdps
         Random randomizer = new Random();
         int herodps = randomizer.nextInt(hero_maxDamage - hero_minDamage) + hero_minDamage;
         int monsdps = randomizer.nextInt(mons_maxDamage - mons_minDamage) + mons_minDamage;
@@ -311,6 +321,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             cd2=0;
                             cd3=0;
                             cd4=0;
+                            hero_xpcounter= hero_base_xpcounter;
                             btnNormAtk.setText("Reset Game");
                             mons_lvl_value =1;
                             hero_lvl_value =1;
