@@ -35,4 +35,6 @@ public class Monster {
     public void setMonsterMaxDamage(float monsterMaxDamage) { this.monsterMaxDamage = monsterMaxDamage; }
     public void setMons_lvl_value(byte mons_lvl_value) { this.mons_lvl_value = mons_lvl_value; }
 
+    // default caller
+    public Monster(){};
 }

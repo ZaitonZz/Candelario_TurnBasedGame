@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.candelario_turnbasedgame.Controller.SkillwStatsR;
+import com.example.candelario_turnbasedgame.Model.Monster;
 import com.example.candelario_turnbasedgame.R;
 
 import java.util.*;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String hero_level = "Lvl:\r";
     String mons_level = "Lvl:\r";
 
+    Monster test= new Monster();
     // Global Variables for systems
     short turnNumber = 0;
     byte stuncounter = 0;
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     float mons_mana_value = mons_base_mana;
     float monsterMinDamage = mons_base_minDamage;
     float monsterMaxDamage = mons_base_maxDamage;
-    int mons_lvl_value = 1;
+    byte mons_lvl_value = 1;
 
     // Hero Stats
     static float hero_base_hp =50;
@@ -71,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     float heroMaxDamage =hero_base_maxDamage;
     byte hero_lvl_value = 1;
     byte hero_xpcounter= hero_base_xpcounter;
+
+    // exp
+    SkillwStatsR test1= new SkillwStatsR();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -279,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             getherolevelRandomizer();
                             hero_xpcounter=0;
                         }
-                        getmonsterlevelRandomizer();
+                        test1.getmonsterstatRandomizer(mons_lvl_value, mons_hp_value, mons_mana_value, monsterMinDamage, monsterMaxDamage);
                         setTextReset();
                         turnNumber= 0;
                         cd1=0;
