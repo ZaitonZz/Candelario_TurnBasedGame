@@ -25,7 +25,13 @@ import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-
+    //TODO: migrate Hero into own java class
+    //TODO: add text beside buttons for clarifications
+    //TODO: add background and music
+    //TODO: add an intro screen with a different music there
+    //TODO: add sound effects with every button click
+    //TODO: migrate most of the skill functionality to combatRelated.java
+    //TODO: debug skill setTexts and differentiate the turn of the player and the turn of the enemy
     TextView mons_name,mons_hp,mons_lvl,mons_mana,hero_name,hero_hp,hero_lvl,hero_mana,combat_log;
     Button btnNormAtk;
     ImageButton skill1,skill2,skill3,skill4;
