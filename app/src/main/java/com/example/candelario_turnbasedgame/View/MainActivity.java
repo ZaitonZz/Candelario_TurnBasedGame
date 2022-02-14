@@ -1,10 +1,10 @@
 package com.example.candelario_turnbasedgame.View;
 
 import static android.content.ContentValues.TAG;
-import static com.example.candelario_turnbasedgame.R.id.btnNormAtk;
-import static com.example.candelario_turnbasedgame.R.string.*;
-
-import androidx.appcompat.app.AppCompatActivity;
+import com.example.candelario_turnbasedgame.Controller.combatRelated;
+import static com.example.candelario_turnbasedgame.R.string.empty_text;
+import static com.example.candelario_turnbasedgame.R.string.not_enough_mana;
+import static com.example.candelario_turnbasedgame.R.string.start_game;
 
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -15,12 +15,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.candelario_turnbasedgame.Controller.SkillwStatsR;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.candelario_turnbasedgame.Model.Monster;
 import com.example.candelario_turnbasedgame.R;
 
-import java.util.*;
-
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String hero_level = "Lvl:\r";
     String mons_level = "Lvl:\r";
 
-    Monster test= new Monster();
+
     // Global Variables for systems
     short turnNumber = 0;
     byte stuncounter = 0;
@@ -52,15 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     byte cd4 = 0;
 
     // Monster Stats
-    static float mons_base_hp = 20;
-    static float mons_base_mana = 10;
-    static float mons_base_minDamage = 3;
-    static float mons_base_maxDamage = 5;
-    float mons_hp_value = mons_base_hp;
-    float mons_mana_value = mons_base_mana;
-    float monsterMinDamage = mons_base_minDamage;
-    float monsterMaxDamage = mons_base_maxDamage;
-    byte mons_lvl_value = 1;
+    byte monslvl = 1;
 
     // Hero Stats
     static float hero_base_hp =50;
@@ -76,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     byte hero_xpcounter= hero_base_xpcounter;
 
     // exp
-    SkillwStatsR test1= new SkillwStatsR();
+    combatRelated test1= new combatRelated();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
         enableFullscreen();
+        new combatRelated();
 
         // Calling TextViews
         mons_name=findViewById(R.id.mons_name);
@@ -105,9 +99,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Replacing the placeholder texts
         mons_name.setText(R.string.mons_name);
-        mons_hp.setText(String.valueOf(mons_hp_value));
-        mons_mana.setText(String.valueOf(mons_mana_value));
-        mons_lvl.setText((mons_level + mons_lvl_value));
+        mons_hp.setText(String.valueOf(Monster.getMons_base_hp()));
+        mons_mana.setText(String.valueOf(Monster.getMons_base_mana()));
+        mons_lvl.setText((mons_level + String.valueOf(Monster.getMons_lvl_value())));
         hero_name.setText(R.string.hero_name);
         hero_hp.setText(String.valueOf(hero_hp_value));
         hero_mana.setText(String.valueOf(hero_mana_value));
@@ -140,13 +134,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Placed these as local variables in order to have their values update as the monster/hero levels up
         int hero_minDamage = Math.round(heroMinDamage);
         int hero_maxDamage = Math.round(heroMaxDamage);
-        int mons_minDamage = Math.round(monsterMinDamage);
-        int mons_maxDamage = Math.round(monsterMaxDamage);
 
         // Called the randomizer for herodps and monsdps
         Random randomizer = new Random();
         int herodps = randomizer.nextInt(hero_maxDamage - hero_minDamage) + hero_minDamage;
-        int monsdps = randomizer.nextInt(mons_maxDamage - mons_minDamage) + mons_minDamage;
 
         // if condition checking if it is my turn or enemy turn
         if(turnNumber % 2 != 1){
@@ -213,11 +204,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     combat_log.setText(not_enough_mana);
                     break;
                 }
-                mons_hp_value = mons_hp_value - 30;
+                Monster.setMons_hp_value(Monster.getMons_hp_value()-30);
                 cd2=7;
                 burncounter=3;
                 hero_mana_value= hero_mana_value - 9;
-                mons_hp.setText(String.valueOf(mons_hp_value));
+                mons_hp.setText(String.valueOf(Monster.getMons_hp_value()));
                 hero_mana.setText(String.valueOf(hero_mana_value));
                 skill2.setEnabled(false);
                 Log.d(TAG, "skill 2 used");
@@ -227,11 +218,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     combat_log.setText(not_enough_mana);
                     break;
                 }
-                mons_hp_value = mons_hp_value - 10;
+                Monster.setMons_hp_value(Monster.getMons_hp_value()-10);
                 cd3=3;
                 burncounter=1;
                 hero_mana_value= hero_mana_value - 5;
-                mons_hp.setText(String.valueOf(mons_hp_value));
+                mons_hp.setText(String.valueOf(Monster.getMons_hp_value()));
                 hero_mana.setText(String.valueOf(hero_mana_value));
                 skill3.setEnabled(false);
                 Log.d(TAG, "skill 3 used");
@@ -260,32 +251,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         hero_mana_value++;
                         hero_mana.setText(String.valueOf(hero_mana_value));
                         btnNormAtk.setText("Next Turn ("+ String.valueOf(turnNumber)+")");
-                        // combat_log.setText(String.valueOf(cd1)+String.valueOf(cd2)+String.valueOf(cd3)+String.valueOf(cd4)); for debug purposes
                         break;
                     }
-                    mons_hp_value = mons_hp_value - herodps;
+                    Monster.setMons_hp_value(Monster.getMons_hp_value()-herodps);
                     turnNumber++;;
                     hero_mana_value++;
                     Log.d(TAG, "player attacked");
                     if (hero_mana_value>hero_base_mana * hero_lvl_value){
                         hero_mana_value = hero_base_mana * hero_lvl_value ;
                     }
-                    mons_hp.setText(String.valueOf(mons_hp_value));
+                    mons_hp.setText(String.valueOf(Monster.getMons_hp_value()));
                     hero_mana.setText(String.valueOf(hero_mana_value));
                     btnNormAtk.setText("Next Turn ("+ String.valueOf(turnNumber)+")");
 
                     combat_log.setText("Our Hero Charizard dealt "+String.valueOf(herodps) + " damage to the enemy.");
 
-                    if(mons_hp_value<= 0){ //checks if mons hp below 0
+                    if(Monster.getMons_hp_value()<= 0){ //checks if mons hp below 0
                         combat_log.setText("Our Hero Charizard dealt "+String.valueOf(herodps) + " damage to the enemy. The player is victorious!");
-                        mons_lvl_value++;
+                        monslvl++;
                         hero_xpcounter++;
                         if(hero_xpcounter==hero_lvl_value){
                             hero_lvl_value++;
                             getherolevelRandomizer();
                             hero_xpcounter=0;
                         }
-                        test1.getmonsterstatRandomizer(mons_lvl_value, mons_hp_value, mons_mana_value, monsterMinDamage, monsterMaxDamage);
+                        test1.getmonsterstatRandomizer(monslvl);
                         setTextReset();
                         turnNumber= 0;
                         cd1=0;
@@ -306,32 +296,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         btnNormAtk.setText("Next Turn ("+ String.valueOf(turnNumber)+")");
                     }
                     else if(burncounter>0){
-                        mons_hp_value = mons_hp_value - burn(mons_hp_value, burn1);
-                        mons_hp.setText(String.valueOf(mons_hp_value));
+                        Monster.setMons_hp_value(burn(Monster.getMons_hp_value(), burn1));
+                        mons_hp.setText(String.valueOf(Monster.getMons_hp_value()));
                         combat_log.setText("The enemy is has been burned for\r"+burncounter+"\rturns.");
                         burncounter--;
                         turnNumber++;
                         btnNormAtk.setText("Next Turn ("+ String.valueOf(turnNumber)+")");
                     }
                     else{
-                        hero_hp_value = hero_hp_value - monsdps;
+                        hero_hp_value = hero_hp_value - Monster.getMonsDPS();
                         turnNumber++;
                         hero_hp.setText(String.valueOf(hero_hp_value));
                         btnNormAtk.setText("Next Turn ("+ String.valueOf(turnNumber)+")");
                         Log.d(TAG, "monster attacked");
-                        combat_log.setText("The monster Arceus dealt "+String.valueOf(monsdps)+ " damage to the enemy.");
+                        combat_log.setText("The monster Arceus dealt "+String.valueOf(Monster.getPrevMonsAtk())+ " damage to the enemy.");
 
                         if(hero_hp_value<= 0){ //checks if hero hp below 0
-                            combat_log.setText("The enemy Arceus dealt "+String.valueOf(monsdps) + " damage to the enemy. You lose");
+                            combat_log.setText("The enemy Arceus dealt "+String.valueOf(Monster.getPrevMonsAtk()) + " damage to the enemy. You lose");
                             cd1=0;
                             cd2=0;
                             cd3=0;
                             cd4=0;
                             hero_xpcounter= hero_base_xpcounter;
                             btnNormAtk.setText("Reset Game");
-                            mons_lvl_value =1;
+                            monslvl =1;
                             hero_lvl_value =1;
-                            getmonsterlevelRandomizer();
+                            combatRelated.getmonsterstatRandomizer(monslvl);
                             getherolevelRandomizer();
                             setTextReset();
                         }
@@ -358,31 +348,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             );
         }
-    }
-    // stat randomizer for monster level up
-    private List<Object> getmonsterlevelRandomizer(){
-        Random randomizer = new Random();
-        this.mons_hp_value = randomizer.nextInt(this.mons_lvl_value)* mons_base_hp;
-        if (mons_hp_value==0){
-            this.mons_hp_value= this.mons_lvl_value * mons_base_hp;
-        }
-        this.mons_mana_value = randomizer.nextInt(this.mons_lvl_value)* mons_base_mana;
-        if (mons_mana_value==0){
-            this.mons_mana_value= this.mons_lvl_value * mons_base_mana;
-        }
-        this.monsterMinDamage = randomizer.nextInt(this.mons_lvl_value)* this.monsterMinDamage;
-        if (monsterMinDamage==0){
-            this.monsterMinDamage= this.mons_lvl_value * mons_base_minDamage;
-        }
-        this.monsterMaxDamage = randomizer.nextInt(this.mons_lvl_value) * this.monsterMaxDamage;
-        if (monsterMaxDamage==0){
-            this.monsterMaxDamage= this.mons_lvl_value * mons_base_maxDamage;
-        }
-        if (monsterMinDamage>= monsterMaxDamage){
-            this.monsterMinDamage= this.mons_lvl_value * mons_base_minDamage;
-            this.monsterMaxDamage= this.mons_lvl_value * mons_base_maxDamage;
-        }
-        return Arrays.asList(this.mons_hp_value, this.mons_mana_value,this.monsterMinDamage,this.monsterMaxDamage);
     }
     // stat randomizer for hero level up
     private List<Object> getherolevelRandomizer(){
@@ -411,12 +376,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void setTextReset(){
         mons_name.setText(R.string.mons_name);
-        mons_hp.setText(String.valueOf(mons_hp_value));
-        mons_mana.setText(String.valueOf(mons_mana_value));
+        mons_hp.setText(String.valueOf(Monster.getMons_hp_value()));
+        mons_mana.setText(String.valueOf(Monster.getMons_hp_value()));
         hero_name.setText(R.string.hero_name);
         hero_hp.setText(String.valueOf(hero_hp_value));
         hero_mana.setText(String.valueOf(hero_mana_value));
-        mons_lvl.setText((mons_level + mons_lvl_value));
+        mons_lvl.setText((mons_level + monslvl));
         hero_lvl.setText((mons_level + hero_lvl_value));
     }
 }

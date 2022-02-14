@@ -1,5 +1,9 @@
 package com.example.candelario_turnbasedgame.Model;
 
+import com.example.candelario_turnbasedgame.Controller.combatRelated;
+
+import java.util.List;
+
 public class Monster {
     // base_stats
     private static float mons_base_hp = 20;
@@ -15,25 +19,31 @@ public class Monster {
     public static float getMons_base_minDamage() { return mons_base_minDamage; }
 
     // flexible variables
-    private float mons_hp_value = mons_base_hp;
-    float mons_mana_value = mons_base_mana;
-    float monsterMinDamage = mons_base_minDamage;
-    float monsterMaxDamage = mons_base_maxDamage;
-    byte mons_lvl_value = 1;
+    static private float mons_hp_value = mons_base_hp;
+    static float mons_mana_value = mons_base_mana;
+    static float monsterMinDamage = mons_base_minDamage;
+    static float monsterMaxDamage = mons_base_maxDamage;
+    static byte mons_lvl_value = 1;
+    static float monsDPS;
+    static float prevMonsAtk;
 
     // getters of flexible variables
-    public float getMons_hp_value() { return mons_hp_value; }
-    public float getMons_mana_value() { return mons_mana_value; }
-    public float getMonsterMinDamage() { return monsterMinDamage; }
-    public float getMonsterMaxDamage() { return monsterMaxDamage; }
-    public byte getMons_lvl_value() { return mons_lvl_value; }
+    public static float getMons_hp_value() { return mons_hp_value; }
+    public static float getMons_mana_value() { return mons_mana_value; }
+    public static float getMonsterMinDamage() { return monsterMinDamage; }
+    public static float getMonsterMaxDamage() { return monsterMaxDamage; }
+    public static byte getMons_lvl_value() { return mons_lvl_value; }
+    public static float getMonsDPS() { combatRelated.monsDps(); return monsDPS;}
+    public static float getPrevMonsAtk() { return prevMonsAtk; }
 
     // setters of flexible variables
-    public void setMons_hp_value(float mons_hp_value) { this.mons_hp_value = mons_hp_value; }
-    public void setMons_mana_value(float mons_mana_value) { this.mons_mana_value = mons_mana_value; }
-    public void setMonsterMinDamage(float monsterMinDamage) { this.monsterMinDamage = monsterMinDamage; }
-    public void setMonsterMaxDamage(float monsterMaxDamage) { this.monsterMaxDamage = monsterMaxDamage; }
-    public void setMons_lvl_value(byte mons_lvl_value) { this.mons_lvl_value = mons_lvl_value; }
+    public static void setMons_hp_value(float hp) { mons_hp_value = hp; }
+    public static void setMons_mana_value(float mana) { mons_mana_value = mana; }
+    public static void setMonsterMinDamage(float monsMinDmg) { monsterMinDamage = monsMinDmg; }
+    public static void setMonsterMaxDamage(float monsMaxDmg) { monsterMaxDamage = monsMaxDmg; }
+    public static void setMons_lvl_value(byte monslvl) { mons_lvl_value = monslvl; }
+    public static void setMonsDPS(float monsDps) { Monster.monsDPS = monsDps; }
+    public static void setPrevMonsAtk(float prevMonsAtk) { Monster.prevMonsAtk = prevMonsAtk; }
 
     // default caller
     public Monster(){};
