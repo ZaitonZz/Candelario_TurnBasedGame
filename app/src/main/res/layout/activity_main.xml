@@ -174,10 +174,52 @@
         android:layout_marginTop="158dp"
         android:layout_marginEnd="338dp"
         android:layout_marginBottom="234dp"
+        android:textAlignment="center"
         android:text="@string/placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:text="Stuns Enemy for\n4 turns"
+        app:layout_constraintBottom_toBottomOf="@+id/skill1"
+        app:layout_constraintStart_toEndOf="@+id/skill1"
+        app:layout_constraintTop_toTopOf="@+id/skill1" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:text="Deals 10 DMG\nand applies burn"
+        app:layout_constraintBottom_toBottomOf="@+id/skill3"
+        app:layout_constraintStart_toEndOf="@+id/skill3"
+        app:layout_constraintTop_toTopOf="@+id/skill3" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:text="Deals 30 DMG \nand applies burn"
+        app:layout_constraintBottom_toBottomOf="@+id/skill2"
+        app:layout_constraintStart_toEndOf="@+id/skill2"
+        app:layout_constraintTop_toTopOf="@+id/skill2"
+        app:layout_constraintVertical_bias="0.538" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:text="Restores full HP \nrests for 4 turns"
+        app:layout_constraintBottom_toBottomOf="@+id/skill4"
+        app:layout_constraintStart_toEndOf="@+id/skill4"
+        app:layout_constraintTop_toTopOf="@+id/skill4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

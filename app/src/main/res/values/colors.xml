@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="hpdefault">#FF1100</color>
     <color name="manadefault">#03A9F4</color>
+    <color name="player_turn">#39FF14</color>
 </resources>
