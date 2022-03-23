@@ -7,6 +7,7 @@ import static com.example.candelario_turnbasedgame.R.string.not_enough_mana;
 import static com.example.candelario_turnbasedgame.R.string.start_game;
 
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,9 +26,6 @@ import com.example.candelario_turnbasedgame.R;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    //TODO: add text beside buttons for clarifications
-    //TODO: add background and music
-    //TODO: add an intro screen with a different music there
     //TODO: add sound effects with every button click
     TextView mons_name,mons_hp,mons_lvl,mons_mana,hero_name,hero_hp,hero_lvl,hero_mana,combat_log;
     Button btnNormAtk;
@@ -36,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     String hero_level = "Lvl:\r";
     String mons_level = "Lvl:\r";
 
+    MediaPlayer player,s1,s2,s3,s4;
 
     // Global Variables for systems
     short turnNumber = 0;
@@ -55,14 +54,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     byte cd3 = 0;
     byte cd4 = 0;
 
-    // Arceus Stats
+
     Monster Arceus;
     byte monslvl = 1;
 
-    // Hero Stats
     Hero Charizard;
 
-    // exp
     combatRelated test1= new combatRelated();
 
     @Override
@@ -96,12 +93,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Replacing the placeholder texts
         mons_name.setText(R.string.mons_name);
-        mons_hp.setText(String.valueOf(Arceus.getBase_hp()));
-        mons_mana.setText(String.valueOf(Arceus.getBase_mana()));
+        mons_hp.setText(String.valueOf(Math.round(Arceus.getBase_hp())));
+        mons_mana.setText(String.valueOf(Math.round(Arceus.getBase_mana())));
         mons_lvl.setText((mons_level + String.valueOf(Arceus.getLvl())));
         hero_name.setText(R.string.hero_name);
-        hero_hp.setText(String.valueOf(Charizard.getHp()));
-        hero_mana.setText(String.valueOf(Charizard.getMana()));
+        hero_hp.setText(String.valueOf(Math.round(Charizard.getHp())));
+        hero_mana.setText(String.valueOf(Math.round(Charizard.getMana())));
         hero_lvl.setText(hero_level + Charizard.getLvl());
         combat_log.setText(empty_text);
         btnNormAtk.setText(start_game);
@@ -124,6 +121,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         skill2.setEnabled(false);
         skill3.setEnabled(false);
         skill4.setEnabled(false);
+
+        // bgm and sfx
+        player = MediaPlayer.create(this, R.raw.bgm);
+        player.setLooping(true);
+        player.start();
+        s1 = MediaPlayer.create(this,R.raw.s_one);
+        s2 = MediaPlayer.create(this, R.raw.s_two);
+        s3 = MediaPlayer.create(this, R.raw.s_three);
+        s4 = MediaPlayer.create(this, R.raw.s_four);
     }
 
     public void onClick(View v) {
@@ -154,86 +160,80 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.skill1:
                 if (Charizard.getMana()-skill1_cost<0) {
                     combat_log.setText(not_enough_mana);
+                    disableSkills();
                     break;
                 }
                 stuncounter=2;
                 cd1=5;
-                Charizard.setMana(Charizard.getMana()-5);
-                hero_mana.setText(String.valueOf(Charizard.getMana()));
+                Charizard.setMana(Charizard.getMana()-skill1_cost);
+                UpdateUI();
                 combat_log.setText("Charizard used Stun Spore!");
                 disableSkills();
                 checkDeadMons();
                 turnNumber++;
-                btnNormAtk.setText("Enemy move!");
+                enemyturn();
                 Log.d(TAG, "skill 1 used");
+                s1.start();
                 break;
             case R.id.skill2:
                 if (Charizard.getMana()-skill2_cost<0) {
                     combat_log.setText(not_enough_mana);
+                    disableSkills();
                     break;
                 }
                 Arceus.setHp(Arceus.getHp()-30);
                 cd2=7;
                 burncounter=3;
-                Charizard.setMana(Charizard.getMana()-9);
-                mons_hp.setText(String.valueOf(Arceus.getHp()));
-                hero_mana.setText(String.valueOf(Charizard.getMana()));
+                Charizard.setMana(Charizard.getMana()-skill2_cost);
+                UpdateUI();
                 combat_log.setText("Charizard used Fire Blast!");
                 disableSkills();
                 checkDeadMons();
                 turnNumber++;
-                btnNormAtk.setText("Enemy move!");
+                enemyturn();
                 Log.d(TAG, "skill 2 used");
+                s2.start();
                 break;
             case R.id.skill3:
                 if (Charizard.getMana()-skill3_cost<0) {
                     combat_log.setText(not_enough_mana);
+                    disableSkills();
                     break;
                 }
                 Arceus.setHp(Arceus.getHp()-10);
                 cd3=3;
                 burncounter=1;
-                Charizard.setMana(Charizard.getMana()-5);
-                mons_hp.setText(String.valueOf(Arceus.getHp()));
-                hero_mana.setText(String.valueOf(Charizard.getMana()));
+                Charizard.setMana(Charizard.getMana()-skill3_cost);
+                UpdateUI();
                 combat_log.setText("Charizard used Flamethrower!");
                 disableSkills();
                 checkDeadMons();
                 turnNumber++;
-                btnNormAtk.setText("Enemy move!");
+                enemyturn();
                 Log.d(TAG, "skill 3 used");
+                s3.start();
                 break;
             case R.id.skill4:
                 if (Charizard.getMana()-skill4_cost<0) {
                     combat_log.setText(not_enough_mana);
+                    disableSkills();
                     break;
                 }
                 Charizard.setHp(Hero.getBase_hp() * Charizard.getLvl());
                 sleepcounter=4;
                 cd4=9;
-                Charizard.setMana(Charizard.getMana() - 10);
+                Charizard.setMana(Charizard.getMana() - skill4_cost);
                 combat_log.setText("Charizard used Rest!");
-                hero_hp.setText(String.valueOf(Charizard.getHp()));
-                hero_mana.setText(String.valueOf(Charizard.getMana()));
+                UpdateUI();
                 Log.d(TAG, "skill 4 used");
                 checkDeadMons();
                 disableSkills();
                 turnNumber++;
-                btnNormAtk.setText("Enemy move!");
+                enemyturn();
+                s4.start();
                 break;
             case R.id.btnNormAtk:
                 if(turnNumber % 2 == 1){ //odd
-                    // if condition checking
-                    if(sleepcounter>0){
-                        combat_log.setText("Charizard is still asleep for "+String.valueOf(sleepcounter)+ "turns!");
-                        sleepcounter--;
-                        turnNumber++;
-                        Charizard.setMana(Charizard.getMana() + 1);
-                        hero_mana.setText(String.valueOf(Charizard.getMana()));
-                        enemyturn();
-                        disableSkills();
-                        break;
-                    }
                     Arceus.setHp(Arceus.getHp()-Charizard.getDPS(Charizard));
                     turnNumber++;;
                     Charizard.setMana(Charizard.getMana() + 1);
@@ -241,10 +241,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (Charizard.getMana()> Hero.getBase_mana() * Charizard.getLvl()){
                         Charizard.setMana( Hero.getBase_mana() * Charizard.getLvl() );
                     }
-                    mons_hp.setText(String.valueOf(Arceus.getHp()));
-                    hero_mana.setText(String.valueOf(Charizard.getMana()));
+                    UpdateUI();
                     enemyturn();
-                    combat_log.setText("Our Hero Charizard dealt "+Charizard.getPrevDmg() + " damage to the enemy!");
+                    combat_log.setText("Our Hero Charizard dealt "+Math.round(Charizard.getPrevDmg()) + " damage to the enemy!");
                     checkDeadMons();
                     disableSkills();
                 }
@@ -258,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                     else if(burncounter>0){
                         Arceus.setHp(burn(Arceus.getHp(), burn1));
-                        mons_hp.setText(String.valueOf(Arceus.getHp()));
+                        UpdateUI();
                         combat_log.setText("The enemy is has been burned for\r"+burncounter+"\rturns!");
                         burncounter--;
                         turnNumber++;
@@ -268,11 +267,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     else{
                         Charizard.setHp(Charizard.getHp() - Arceus.getDPS(Arceus));
                         turnNumber++;
-                        hero_hp.setText(String.valueOf(Charizard.getHp()));
+                        UpdateUI();
                         Log.d(TAG, "Arceus attacked");
                         heroturn();
-                        combat_log.setText("The Arceus dealt "+String.valueOf(Arceus.getPrevDmg())+ " damage to the enemy!");
+                        combat_log.setText("The Arceus dealt "+(Math.round(Arceus.getPrevDmg()))+ " damage to the Charizard!");
                         checkDeadHero();
+                        checkHeroSleeping();
                     }
                 }
                 break;
@@ -294,15 +294,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
                         View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             );
-
     }
     private void setTextReset(){
         mons_name.setText(R.string.mons_name);
-        mons_hp.setText(String.valueOf(Arceus.getHp()));
-        mons_mana.setText(String.valueOf(Arceus.getHp()));
+        mons_hp.setText(String.valueOf(Math.round(Arceus.getHp())));
+        mons_mana.setText(String.valueOf(Math.round(Arceus.getHp())));
         hero_name.setText(R.string.hero_name);
-        hero_hp.setText(String.valueOf(Charizard.getHp()));
-        hero_mana.setText(String.valueOf(Charizard.getMana()));
+        hero_hp.setText(String.valueOf(Math.round(Charizard.getHp())));
+        hero_mana.setText(String.valueOf(Math.round(Charizard.getMana())));
         mons_lvl.setText((mons_level + monslvl));
         hero_lvl.setText((mons_level + Charizard.getLvl()));
     }
@@ -314,7 +313,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
     private void checkDeadHero(){
         if(Charizard.getHp()<= 0) { //checks if hero hp below 0
-            combat_log.setText("The enemy Arceus dealt " + String.valueOf(Arceus.getPrevDmg()) + " damage to the enemy. You lose!");
+            combat_log.setText("The enemy Arceus dealt " + String.valueOf(Math.round(Arceus.getPrevDmg())) + " damage to the Charizard. You lose!");
             resetSkillsCD();
             Charizard.setxpcounter(Charizard.getBase_xpcounter());
             btnNormAtk.setText("Reset Game!");
@@ -323,11 +322,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             combatRelated.getmonsterstatRandomizer(monslvl, Arceus);
             combatRelated.getherolevelRandomizer(Charizard);
             setTextReset();
+            resetCounters();
         }
     }
     private void checkDeadMons(){
         if(Arceus.getHp()<= 0){ //checks if mons hp below 0
-            combat_log.setText("Our Hero Charizard dealt "+String.valueOf(Charizard.getPrevDmg()) + " damage to the enemy. The player is victorious!");
+            combat_log.setText("Our Hero Charizard dealt "+String.valueOf(Math.round(Charizard.getPrevDmg())) + " damage to the enemy. The player is victorious!");
             monslvl++;
             Charizard.setxpcounter((byte) (Charizard.getxpcounter() + 1));
             if(Charizard.getxpcounter()==Charizard.getLvl()){
@@ -340,6 +340,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             turnNumber= 0;
             resetSkillsCD();
             btnNormAtk.setText("Next Encounter!");
+            resetCounters();
+        }
+    }
+    private void checkHeroSleeping() {
+        if(sleepcounter>0){
+            combat_log.setText("Arceus dealt damage,and yet Charizard is still asleep for "+String.valueOf(sleepcounter)+ "turns!");
+            sleepcounter--;
+            turnNumber++;
+            Charizard.setMana(Charizard.getMana() + 1);
+            UpdateUI();
+            enemyturn();
+            disableSkills();
         }
     }
     private void disableSkills(){
@@ -357,5 +369,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnNormAtk.setText("Your move!");
         btnNormAtk.setTextColor(getResources().getColor(R.color.black));
         btnNormAtk.setBackgroundColor(getResources().getColor(R.color.player_turn));
+    }
+    private void UpdateUI(){
+        hero_hp.setText(String.valueOf(Math.round(Charizard.getHp())));
+        mons_hp.setText(String.valueOf(Math.round(Arceus.getHp())));
+        hero_mana.setText(String.valueOf(Math.round(Charizard.getMana())));
+    }
+    private void resetCounters(){
+        sleepcounter=0;
+        burncounter=0;
+        stuncounter=0;
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        player.pause();
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        player.start();
+        enableFullscreen();
     }
 }

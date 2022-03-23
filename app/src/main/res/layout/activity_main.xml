@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg"
     tools:context=".View.MainActivity">
 
 
@@ -27,7 +28,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="360dp"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="@string/placeholder"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/Mons"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,8 +40,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="@string/placeholder"
         android:textColor="@color/hpdefault"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/mons_name"
         app:layout_constraintTop_toTopOf="@+id/mons_name" />
 
@@ -45,8 +51,10 @@
         android:id="@+id/mons_mana"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="@string/placeholder"
         android:textColor="@color/manadefault"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/mons_hp"
         app:layout_constraintTop_toTopOf="@+id/mons_lvl" />
 
@@ -55,7 +63,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="@string/placeholder"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/mons_name"
         app:layout_constraintTop_toBottomOf="@+id/mons_name" />
 
@@ -65,7 +76,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="206dp"
         android:layout_marginBottom="185dp"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="@string/placeholder"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Hero" />
 
@@ -74,8 +88,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="120dp"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="@string/placeholder"
         android:textColor="@color/hpdefault"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/hero_name"
         app:layout_constraintTop_toTopOf="@+id/hero_name" />
 
@@ -83,8 +99,10 @@
         android:id="@+id/hero_mana"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="@string/placeholder"
         android:textColor="@color/manadefault"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/hero_hp"
         app:layout_constraintTop_toTopOf="@+id/hero_lvl" />
 
@@ -93,7 +111,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="29dp"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="@string/placeholder"
+        android:textColor="#000000"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@+id/hero_name"
         app:layout_constraintTop_toBottomOf="@+id/hero_name" />
 
@@ -121,11 +142,16 @@
         android:id="@+id/btnNormAtk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="36dp"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="@string/placeholder"
+        android:textAlignment="center"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.928"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.931" />
 
     <ImageButton
         android:id="@+id/skill1"
@@ -167,26 +193,13 @@
         app:srcCompat="@drawable/whiteegg" />
 
     <TextView
-        android:id="@+id/combat_log"
-        android:layout_width="207dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="335dp"
-        android:layout_marginTop="158dp"
-        android:layout_marginEnd="338dp"
-        android:layout_marginBottom="234dp"
-        android:textAlignment="center"
-        android:text="@string/placeholder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
-        android:text="Stuns Enemy for\n4 turns"
+        android:fontFamily="@font/pokemon_fire_red"
+        android:text="Stuns Enemy for\n2 turns"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/skill1"
         app:layout_constraintStart_toEndOf="@+id/skill1"
         app:layout_constraintTop_toTopOf="@+id/skill1" />
@@ -196,7 +209,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="Deals 10 DMG\nand applies burn"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/skill3"
         app:layout_constraintStart_toEndOf="@+id/skill3"
         app:layout_constraintTop_toTopOf="@+id/skill3" />
@@ -206,7 +221,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="Deals 30 DMG \nand applies burn"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/skill2"
         app:layout_constraintStart_toEndOf="@+id/skill2"
         app:layout_constraintTop_toTopOf="@+id/skill2"
@@ -217,9 +234,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
+        android:fontFamily="@font/pokemon_fire_red"
         android:text="Restores full HP \nrests for 4 turns"
+        android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="@+id/skill4"
         app:layout_constraintStart_toEndOf="@+id/skill4"
         app:layout_constraintTop_toTopOf="@+id/skill4" />
+
+    <TextView
+        android:id="@+id/combat_log"
+        android:layout_width="207dp"
+        android:layout_height="54dp"
+        android:fontFamily="@font/pokemon_fire_red"
+        android:text="@string/placeholder"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.406" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
