@@ -26,7 +26,7 @@ import com.example.candelario_turnbasedgame.R;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    //TODO: add sound effects with every button click
+    //TODO: add xp counter in text
     TextView mons_name,mons_hp,mons_lvl,mons_mana,hero_name,hero_hp,hero_lvl,hero_mana,combat_log;
     Button btnNormAtk;
     ImageButton skill1,skill2,skill3,skill4;
